@@ -1,0 +1,22 @@
+{
+  "name": "decentralizedweb",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.1.4",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.4",
+    "hardhat": "^2.22.2"
+  }
+}
