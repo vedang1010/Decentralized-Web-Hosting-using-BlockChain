@@ -1,6 +1,6 @@
-import Image from "next/image";
-import styles from "../style/page.module.css";
-
+import Layout from "@/components/layout/Layout";
+import LoginPage from "@/components/LoginPage";
+// import { headers } from "next/headers";
 export default function Home() {
   return (
     // <main className={styles.main}>
@@ -91,6 +91,10 @@ export default function Home() {
     //     </a>
     //   </div>
     // </main>
-    <div></div>
+    <Layout>
+      <LoginPage>
+
+      </LoginPage>
+    </Layout>
   );
 }
