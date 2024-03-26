@@ -22,20 +22,19 @@ const LoginPage = () => {
         <StyledImage src="/google.png" alt="Google Logo" width={100} height={40} />
       </LoginSubContainer>
       <LoginSubDiv onSubmit={handleSubmit}> {/* Add onSubmit event handler to the form */}
-        <LoginEmail placeholder="Email" type="email" />
-        <LoginPassword placeholder="Password" type="password" />
+        <LoginEmail placeholder="Email" type="email" required />
+        <LoginPassword placeholder="Password" type="password" required/>
         <LoginSubmit value="Login" type="submit" />
-        <ForgetLink >
-          <Link href={'/ResetPassword'}>
-            Forgot Password?
-          </Link>
+        <ForgetLink onClick={() => router.push('/ResetPassword')}> {/* Use router.push for navigation */}
+          Forgot Password?
         </ForgetLink>
       </LoginSubDiv>
-      <Link href={'/signup'} >Don't Have an account?
-        <SignupLink >Sign Up</SignupLink>
-      </Link>
+      <SignupLink onClick={() => router.push('/signup')}> {/* Use router.push for navigation */}
+        Don't Have an account?
+      </SignupLink>
     </LoginContainer>
   )
+
 }
 
 export default LoginPage
