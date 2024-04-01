@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { TailSpin } from 'react-loader-spinner';
@@ -14,6 +15,7 @@ const Files = () => {
   const [uploaded, setUploaded] = useState(false);
   const [selectedFileContent, setSelectedFileContent] = useState('');
   const [loadingFileContent, setLoadingFileContent] = useState(false);
+  const [fileMapping, setFileMapping] = useState({});
 
   const fetchFilesData = () => {
     setFiles([{ name: 'index.html' }]);
@@ -34,12 +36,22 @@ const Files = () => {
             path: file.name,
             content: file,
           });
-          return { name: file.name, hash: added.path };
+
+          const cid = added.cid._baseCache.get('z');
+          return { name: file.name, path: added.path, cid: cid };
         }));
 
+        const mapping = uploadedFiles.reduce((acc, curr) => {
+          acc[curr.name] = curr.cid;
+          return acc;
+        }, {});
+
+        setFileMapping(mapping);
+        console.log("File Mapping:", fileMapping); // Print file mapping
         setFiles([...files, ...uploadedFiles]);
         setSelectedFiles([]);
         setUploadLoading(false);
+        // setUploaded(true);
       } catch (error) {
         console.error('Error uploading files:', error);
         setUploadLoading(false);
@@ -72,6 +84,8 @@ const Files = () => {
           {files.map((file, index) => (
             <FileItem key={index} onClick={() => handleFileClick(file.name)}>
               <FileName>{file.name}</FileName>
+              <CID target='blank' href={'https://ipfs.io/ipfs/'+file.cid}>{file.cid}</CID> {/* Display the CID */}
+
               <DeleteButton onClick={() => handleFileDelete(file.name)}>Delete</DeleteButton>
             </FileItem>
           ))}
@@ -180,6 +194,10 @@ const IDEHeader = styled.h2`
 const IDEBody = styled.pre`
   white-space: pre-wrap;
   font-family: monospace;
+`;
+const CID = styled.a`
+  font-size: 14px;
+  color: #888; /* You can adjust the color according to your preference */
 `;
 
 export default Files;

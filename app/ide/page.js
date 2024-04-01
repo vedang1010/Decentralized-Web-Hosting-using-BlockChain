@@ -8,6 +8,7 @@ import { faPlay, faCircleXmark ,faSave} from "@fortawesome/free-solid-svg-icons"
 
 const files = {
   "index.html": {
+    
     name: "index.html",
     language: "html",
     value: "",
@@ -24,7 +25,7 @@ const files = {
   },
 };
 
-export default function Home() {
+export default function Ide() {
   const [fileName, setFileName] = useState("index.html");
   const [htmlCode, setHtmlCode] = useState("");
   const [cssCode, setCssCode] = useState("");
@@ -169,7 +170,7 @@ export default function Home() {
           defaultLanguage={files[fileName].language}
           defaultValue={files[fileName].value}
           onChange={handleEditorChange}
-          value={files[fileName].value}
+          value={files[fileName].value} 
         />
       </div>
       <div className={styles.websiteWindow} id="outputWindow">

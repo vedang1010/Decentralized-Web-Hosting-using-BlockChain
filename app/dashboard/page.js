@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 const dashboard = () => {
   const router = useRouter(); // Initialize useRouter hook
   const handleFileManagerClick = () => {
-    router.push('/files'); // Navigate to the files page
+    router.push('/file'); // Navigate to the files page
   };
   return (
     <Layout>
