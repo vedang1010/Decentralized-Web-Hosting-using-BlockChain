@@ -80,7 +80,9 @@ const Files = () => {
 
             try {
                 setUploadLoading(true);
-                const added = await fleekSdk.ipfs().addAll({ files: ipfsFiles, wrapWithDirectory: true, });
+                
+                const added = await fleekSdk.ipfs().addAll({files:ipfsFiles,options:{wrapWithDirectory:true}});
+                console.log(added);
 
                 setSelectedFiles([]);
                 setUploadLoading(false);
@@ -209,6 +211,9 @@ const Files = () => {
         if (changesMade) {
             // If changes have been made, save the content
             handleSave();
+            console.log(changesMade);
+            setChangesMade(false);
+            console.log(changesMade);
         } else {
             // If no changes have been made, close the editor
             handleCloseEditor();
@@ -232,7 +237,7 @@ const Files = () => {
 
                 {/* Buttons */}
                 <ButtonsContainer>
-                    <input type="file" onChange={handleFileSelect} multiple />
+                    <input type="file" onChange={handleFileSelect} multiple webkitdirectory="" directory=""/>
                     <Button onClick={uploadFiles}>Upload Files</Button>
                     <Button onClick={handlePrintData}>Print Files Data</Button> {/* Button to print files data */}
                     <Button onClick={createFolderAndUpload}>Create Folder & Upload</Button> {/* Button to create folder and upload */}
