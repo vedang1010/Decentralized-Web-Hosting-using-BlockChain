@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import Image from "next/image";
 import Layout from '@/components/layout/Layout';
 import { TailSpin } from 'react-loader-spinner';
 import Editor from "@monaco-editor/react";
@@ -216,23 +217,24 @@ const Files = () => {
     };
     return (
         <Layout>
-            <FileContainer>
-                {/* Your existing code for file list and buttons */}
-                {/* File list */}
-                <Header>List of Files</Header>
-                <FilesList>
-                    {files.map((file, index) => (
-                        <FileItem key={index} onClick={() => handleFileClick(file.name)}>
-                            <FileName>{file.name}</FileName>
-                            <CID>{file.cid}</CID> {/* Display the CID */}
-                            <DeleteButton onClick={() => handleFileDelete(file.name)}>Delete</DeleteButton>
-                        </FileItem>
-                    ))}
-                </FilesList>
-
-                {/* Buttons */}
-                <ButtonsContainer>
+            <Input>
+                <div>
                     <input type="file" onChange={handleFileSelect} multiple />
+                </div>
+            </Input>
+            <ImageContainer>
+                <div>
+                    <StyledImage src="/ws5.png" alt="ws5" width={1000} height={1000} />
+                    <StyledImage src="/ws2.png" alt="ws2" width={1000} height={1000} />
+                    <StyledImage src="/ws3.jpg" alt="ws3" width={1000} height={1000} />
+                    <StyledImage src="/ws1.png" alt="ws1" width={1000} height={1000} />
+                    <StyledImage src="/ws4.jpg" alt="ws4" width={1000} height={1000} />
+
+                </div>
+                
+            </ImageContainer>
+            {/* Buttons */}
+            <ButtonsContainer>
                     <Button onClick={uploadFiles}>Upload Files</Button>
                     <Button onClick={handlePrintData}>Print Files Data</Button> {/* Button to print files data */}
                     <Button onClick={createFolderAndUpload}>Create Folder & Upload</Button> {/* Button to create folder and upload */}
@@ -242,6 +244,9 @@ const Files = () => {
                         <Button>Files uploaded successfully</Button>
                     ) : null}
                 </ButtonsContainer>
+
+            <FileContainer>
+                
 
                 {/* Loading message */}
                 {loadingFileContent ? (
@@ -263,14 +268,65 @@ const Files = () => {
                         <CloseEditorButton onClick={handleCloseEditor}>Close Editor</CloseEditorButton>
                     </EditorContainer>
                 )}
+
+                 {/* Your existing code for file list and buttons */}
+                {/* File list */}
+                <Header>List of Files</Header>
+                <FilesList>
+                    {files.map((file, index) => (
+                        <FileItem key={index} onClick={() => handleFileClick(file.name)}>
+                            <FileName>{file.name}</FileName>
+                            <CID>{file.cid}</CID> {/* Display the CID */}
+                            <DeleteButton onClick={() => handleFileDelete(file.name)}>Delete</DeleteButton>
+                        </FileItem>
+                    ))}
+                </FilesList>
             </FileContainer>
+            
         </Layout>
     );
 };
 
+
+const Input = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100%;
+`;
+
+const ImageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0px;
+    width: 100%;
+    height: 250px;
+    align-items: center;
+`;
+
+const StyledImage = styled.img`
+  /* Add your styles here */
+  border-radius: 5px;
+  height: 200px;
+  width: auto;
+  margin: 0;
+  &:first-child {
+    margin-right: 0px; /* Add some space between the images */
+  }
+  /* margin-left: 50px; */ 
+  &:hover {
+    transform: scale(1.2); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
+
+`;
+
 const FileContainer = styled.div`
   width: 100%;
   height: 90vh;
+  overflow-y: auto;
 `;
 
 const Header = styled.h1`
@@ -309,8 +365,9 @@ const DeleteButton = styled.button`
 const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 20px;
+  flex-direction: row;
 `;
 
 const Button = styled.button`
@@ -319,14 +376,20 @@ const Button = styled.button`
   align-items: center;
   width: 250px;
   padding: 15px;
-  color: white;
-  background-color: #00b712;
-  background-image: linear-gradient(180deg, #00b712 0%, #5aff15 80%);
+  border-radius: 25px;
+  border: 5px solid ${(props) => props.theme.color};
+  color: ${(props) => props.theme.color};
+  background-color: ${(props) => props.theme.bgSubDiv};
   border: none;
   margin-top: 30px;
   cursor: pointer;
   font-weight: bold;
   font-size: large;
+  margin-right: 10px;
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `;
 
 const LoadingMessage = styled.p`

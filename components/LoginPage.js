@@ -42,7 +42,7 @@ export default LoginPage
 const Title = styled.div`
   font-size: 40px;
   font-style: bold;
-  color: blueviolet;
+  color: bluevoilet;
   font-weight:800;
   margin-bottom: 20px;
  `
@@ -74,30 +74,42 @@ const LoginSubmit = styled.input`
   height: 40px;
   cursor: pointer;
   width: 100px;
-  background-color: grey;
+  background-color: green;
   font-size: large;
   padding: 10px;
   font-weight: 500;
   color: black;
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 const LoginEmail = styled.input`
   height: 40px;
   width: 300px;
-  background-color: #20b725;
+  background-color: white;
   font-size: large;
   padding: 10px;
   font-weight: 500;
   color: ${(props) => props.theme.color};
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 const LoginPassword = styled.input`
   height: 40px;
   width: 300px;
-  background-color: #20b725;
+  background-color: white;
   font-size: large;
   padding: 10px;
   margin: 20px;
   font-weight: 500;
   color: ${(props) => props.theme.color};
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 
 const LoginSubDiv = styled.form`
@@ -112,12 +124,20 @@ const LoginSubDiv = styled.form`
 const LoginContainer = styled.div`
     /* width: 100%; */
     height: 70vh;
+    width: 50vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 5px solid ${(props) => props.theme.color};
+    border-radius: 8px;
     /* left: 80px; */
     display: flex;
     justify-content: center;
     align-items: center;
     /* top: 550px; */
     flex-direction: column;
+    background-color: offwhite;
 `
 const LoginSubContainer = styled.button`
     color: ${(props) => props.theme.color};
@@ -131,6 +151,10 @@ const LoginSubContainer = styled.button`
     align-items: center;
     padding: 16px;
     border-radius: 10px;
+    &:hover {
+      transform: scale(1.1); /* Scale the image up by 10% on hover */
+      transition: transform 0.2s ease;
+  }
 `
 
 const ImageDiv = styled.image`
@@ -142,8 +166,9 @@ const ImageDiv = styled.image`
 const StyledImage = styled(Image)`
   /* Add your styles here */
   border-radius: 5px;
-  height: 50px;
-  scale: 0.8;
+  height: 70px;
+  width: 50px
+  scale: 0.3;
   /* margin-left: 50px; */ 
 `
 const StyledText = styled.div`

@@ -103,6 +103,16 @@ const ResetPasswordContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: off-white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid ${(props) => props.theme.color};
+  border-radius: 8px;
+  height: 70vh;
+  width: 50vh;
+
 `
 
 const Title = styled.h1`
@@ -117,6 +127,11 @@ const InputField = styled.input`
   padding: 10px;
   margin-bottom: 15px;
   font-size: 16px;
+  border: 1px solid ${(props) => props.theme.color};
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 
 const SubmitButton = styled.input`
@@ -130,6 +145,10 @@ const SubmitButton = styled.input`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 
 const ErrorMessage = styled.div`

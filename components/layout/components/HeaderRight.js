@@ -39,5 +39,6 @@ const ThemeToggle = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    
 `
 export default HeaderRight

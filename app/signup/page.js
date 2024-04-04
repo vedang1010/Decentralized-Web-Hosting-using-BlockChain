@@ -62,7 +62,7 @@ export default Signup;
 const Title = styled.div`
   font-size: 40px;
   font-style: bold;
-  color: blueviolet;
+  color: bluevoilet;
   font-weight: 800;
   margin-bottom: 20px;
 `
@@ -75,45 +75,62 @@ const SignupLink = styled.button`
   border-radius: 7px;
   background-color: ${(props) => props.theme.bgSubDiv};
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 
 const LoginSubmit = styled.input`
   height: 40px;
   cursor: pointer;
   width: 150px;
-  background-color: grey;
+  background-color: #7DB954;
   font-size: large;
   padding: 10px;
   font-weight: 500;
   color: black;
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
+
 `
 
 const LoginEmail = styled.input`
   height: 40px;
   width: 300px;
-  background-color: #20b725;
+  background-color: white;
   font-size: large;
   padding: 10px;
   font-weight: 500;
   color: ${(props) => props.theme.color};
   margin: 15px;
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 
 const LoginPassword = styled.input`
   height: 40px;
   width: 300px;
-  background-color: #20b725;
+  background-color: white;
   font-size: large;
   padding: 10px;
   margin-bottom: 15px;
   font-weight: 500;
   color: ${(props) => props.theme.color};
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 
 const OTPInput = styled.input`
   height: 40px;
   width: 300px;
-  background-color: #20b725;
+  background-color: green;
   font-size: large;
   padding: 10px;
   margin-top: 20px;
@@ -132,10 +149,18 @@ const LoginSubDiv = styled.form`
 
 const SignupContainer = styled.div`
   height: 70vh;
+  width: 50vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-color: off-white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid ${(props) => props.theme.color};
+  border-radius: 8px;
 `
 
 const ErrorMessage = styled.div`
