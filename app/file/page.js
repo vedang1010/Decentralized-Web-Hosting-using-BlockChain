@@ -136,7 +136,7 @@ const Files = () => {
                     // email: email,
                     // profile_picture : imageUrl
                     domain: domainName,
-                    cid: added[indexHtmlCID].cid._baseCache.get('z')
+                    cid:"https://ipfs.io/ipfs/"+ added[indexHtmlCID].cid._baseCache.get('z')
                 });
                 console.log("error")
                 const filesReference = ref(database, "users/" + user.uid + "/uploads/files");
@@ -186,15 +186,7 @@ const Files = () => {
                         });
 
                     }
-                    // const userRef = ref(database, userId+"/uploads/files");
 
-                    // Iterate over each file of the user
-                    // forEachChild(userRef, (fileSnapshot) => {
-                    //     const fileName = fileSnapshot.key;
-                    //     const cid = fileSnapshot.val().cid;
-
-                    //     console.log(`User: ${userId}, File Name: ${fileName}, CID: ${cid}`);
-                    // });
                 });
 
             } catch (error) {
@@ -329,6 +321,10 @@ const Files = () => {
     };
     return (
         <Layout>
+        <DomainInputContainer>
+        Enter Domain
+            <DomainInputField placeholder='Domain' onChange={handleDomainNameChange}></DomainInputField>
+        </DomainInputContainer>
             <Input>
                 <div>
                     <input type="file" onChange={handleFileSelect} multiple />

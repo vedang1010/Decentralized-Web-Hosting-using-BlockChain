@@ -47,6 +47,9 @@ const dashboard = () => {
       <DashboardTopLeft>
           <Header>Website Name</Header>
           <Subheader>Created on 20/11/10</Subheader>
+          <SignOutContainer onClick={()=>auth.signOut()}>
+Sign out
+    </SignOutContainer>
         </DashboardTopLeft>
 
         <ImageContainer>
@@ -194,4 +197,3 @@ const VisitorCount = styled.div`
     transition: transform 0.2s ease;
 }
 `
-
