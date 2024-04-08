@@ -13,7 +13,6 @@ const HostedWebsites = () => {
   const [websites, setWebsites] = useState([]);
 
   useEffect(() => {
-    if (user) {
       const rootRef = ref(database, "users");
       onValue(rootRef, (snapshot) => {
         const users = snapshot.val();
@@ -29,8 +28,8 @@ const HostedWebsites = () => {
 
         setWebsites(updatedWebsites);
       });
-    }
-  }, [user, database]);
+    
+  }, [database]);
 
   return (
     <Container>

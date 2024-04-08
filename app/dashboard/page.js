@@ -197,3 +197,5 @@ const VisitorCount = styled.div`
     transition: transform 0.2s ease;
 }
 `
+const SignOutContainer=styled.button`
+`
