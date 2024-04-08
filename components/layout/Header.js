@@ -18,6 +18,8 @@ const Header = () => {
 const HeaderWrapper = styled.div`
   width:100%;
   position: fixed;
+  top: 0;
+
    height:70px;
    display:flex;
    justify-content:space-around;

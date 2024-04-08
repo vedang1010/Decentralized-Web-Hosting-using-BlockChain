@@ -46,6 +46,8 @@ export default function Ide() {
       setCssCode(files["style.css"].value);
       setJsCode(files["script.js"].value);
       document.getElementById("outputWindow").style.display = "block";
+      document.getElementById("outputWindow").style.width = "100vw";
+
     });
 
     clsBtn?.addEventListener("click", () => {
@@ -108,6 +110,8 @@ export default function Ide() {
   return (
     <>
       <div>
+        <div className="{styles,container}">
+        <div className="styles.editorContainer">
         <div className={styles.topBar}>
           <button
             className={styles.htmlButton}
@@ -181,7 +185,7 @@ export default function Ide() {
             </div>
           </button>
         </div>
-        <iframe
+        <iframe id=""
           title="output"
           srcDoc={`
   <html>
@@ -191,6 +195,8 @@ export default function Ide() {
   </html>`}
           className={styles.outputiframewindow}
         />
+      </div>
+      </div>
       </div>
     </>
   );

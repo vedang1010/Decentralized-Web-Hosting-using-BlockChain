@@ -65,7 +65,7 @@ const Title = styled.div`
 
   font-size: 60px;
   font-style: bold;
-  color: blueviolet;
+  color: 0F1035;
   font-weight: 800;
   margin-bottom: 20px;
 `

@@ -1,9 +1,13 @@
 const light={
     color: "#000",
-    bgColor:"#efe7fd",
-    bgImage: 'linear-gradient(180deg, #ffffff 0%, #666666 60%)',
-    bgDiv:'#fff',
-    bgSubDiv:'#e8e6eb'
+    bgColor:"#DCF2F1",
+    bgImage: 'linear-gradient(180deg, #DCF2F1 0%, #7FC7D9 60%)',
+    
+    /*bgColor:"#E3FEF7",
+    bgImage: 'linear-gradient(180deg, #E3FEF7 0%, #77B0AA 60%)',
+    */
+    bgDiv:'#365486',
+    bgSubDiv:'365486'
 }
 const dark={
     color: "#fff",

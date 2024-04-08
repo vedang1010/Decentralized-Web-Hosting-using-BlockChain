@@ -87,7 +87,7 @@ export default LoginPage
 const Title = styled.div`
   font-size: 40px;
   font-style: bold;
-  color: bluevoilet;
+  color: ${(props) => props.theme.color};
   font-weight:800;
   margin-bottom: 20px;
  `

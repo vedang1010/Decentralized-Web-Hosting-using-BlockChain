@@ -9,6 +9,7 @@ import { getAuth } from "firebase/auth"
 import { initFirebase } from "@/Config/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { getDatabase, ref, set, onValue } from "firebase/database";
+import { useRouter } from 'next/navigation';
 
 // const applicationService = new ApplicationAccessTokenService({ clientId: 'client_x5nxBa5Iv6wXy6wK75UB' });
 const applicationService = new ApplicationAccessTokenService({ clientId: 'client_fJWEyEhzVTOq9yMX3O78' });
@@ -20,7 +21,7 @@ const Files = () => {
     const auth = getAuth();
     const [user, loading] = useAuthState(auth);
     const database = getDatabase(app);
-
+    const router = useRouter();
     const [files, setFiles] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadLoading, setUploadLoading] = useState(false);
@@ -35,6 +36,11 @@ const Files = () => {
     const [changesMade, setChangesMade] = useState(false);
 
     const [domainName, setDomainName] = useState('');
+
+
+    const GoToDashboard = (event) => {
+        router.push('/dashboard');
+    }
 
     const handleDomainNameChange = (event) => {
         setDomainName(event.target.value);
@@ -321,6 +327,11 @@ const Files = () => {
     };
     return (
         <Layout>
+            <Dashboardbtn>
+                <div>
+               <Button onClick={GoToDashboard}>Dashboard</Button>
+               </div>
+               </Dashboardbtn>
         <DomainInputContainer>
         Enter Domain
             <DomainInputField placeholder='Domain' onChange={handleDomainNameChange}></DomainInputField>
@@ -399,11 +410,22 @@ const DomainInputContainer = styled.div`
     margin-bottom: 20px;
 `;
 
-
+const Dashboardbtn = styled.div`
+    position: fixed;
+    bottom: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    color: #fff;
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+`;
 
 const DomainInputField = styled.input`
-    width: 100%;
-    padding: 8px;
+    width: 50%;
+    margin: 10px 10px;
+
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 `;
