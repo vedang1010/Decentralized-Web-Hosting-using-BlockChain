@@ -66,6 +66,35 @@ Sign out
 
 export default dashboard
 
+
+const ImageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 50px;
+    width: 100%;
+    height: 250px;
+    align-items: flex-start;
+
+`;
+
+const StyledImage = styled.img`
+  /* Add your styles here */
+  border-radius: 5px;
+  height: 200px;
+  width: auto;
+  margin: 0;
+  &:first-child {
+    margin-right: 0px; /* Add some space between the images */
+  }
+  /* margin-left: 50px; */ 
+  &:hover {
+    transform: scale(1.2); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
+
+`;
+
 const Logs = styled.div`
   font-size: 12px;
   cursor: pointer; /* Ensure the cursor changes on hover */
@@ -75,41 +104,35 @@ const Logs = styled.div`
     color: blue;
   }
 `;
-const SignOutContainer=styled.button`
-border:2px solid red;
-cursor :pointer;
-`
-const Content = styled.button`
+
+const Content = styled.div`
     font-size: 16px;
-    cursor:pointer;
 `
-const DashboardContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  padding:200px;
-  
-`
+
 
 const DashboardTopLeft = styled.div`
   flex: 1;
   /* left: 0; */
   margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 const DashboardContent = styled.div`
   flex: 2;
-  margin: 30px;
+  margin: 50px;
   display: flex;
-  padding: 5px;
+  padding: 70px;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  flex-direction: row;
   
 `
 
 const Header = styled.h1`
+  padding: 20px;
   font-size: 24px;
   font-weight: bold;
   align-items: center;
@@ -125,25 +148,32 @@ const Subheader = styled.p`
 
 const FileManager = styled.button`
   background-color: #f2f2f2;
-  padding: 20px;
+  padding: 10px;
   border-radius: 5px;
   display: flex;
   cursor: pointer;
-  border: 1px solid;
+  
   justify-content: center;
   align-items: center;
   margin: 20px;
-  width: 100%;
+  width: 200px;
+  height: 60px;
   font-size: 16px;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.color};
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
   `
 
 const VisitorCount = styled.div`
   background-color: #f2f2f2;
-  width: 100%;
-  padding: 20px;
+  width: 200px;
+  padding: 10px;
+  height: 60px;
   border-radius: 5px;
+  border: 1px solid;
   display: flex;
   align-items: center;
   display: flex; 
@@ -151,5 +181,9 @@ const VisitorCount = styled.div`
   justify-content: center;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.color};
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `
 
