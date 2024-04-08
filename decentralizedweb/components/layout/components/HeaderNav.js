@@ -21,15 +21,12 @@ const HeaderNav = () => {
 }
 
 const HeaderNavWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  width: 100%
-  display: block;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: ${(props) => props.theme.bgDiv};
   padding: 6px;
-  z-index: 1000;
+  height: 50%;
   border-radius: 10px;
   `
 

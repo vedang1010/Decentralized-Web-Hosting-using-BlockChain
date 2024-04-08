@@ -35,13 +35,11 @@ const Signup = () => {
   return (
     <Layout>
       <SignupContainer>
-
-        <Title>Register</Title>
+        <Title>Sign Up</Title>
         <LoginSubDiv onSubmit={handleSubmit}>
-          <LoginButton placeholder="name" type="text" required/>
-          <LoginButton placeholder="Email" type="email" required/>
-          <LoginButton placeholder="Password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-          <LoginButton placeholder="Confirm Password" type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <LoginEmail placeholder="Email" type="email" required/>
+          <LoginPassword placeholder="Password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <LoginPassword placeholder="Confirm Password" type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
           {!passwordsMatch && <ErrorMessage>Passwords do not match</ErrorMessage>}
           <LoginSubmit type="submit" value="Get OTP" />
         </LoginSubDiv>
@@ -51,7 +49,7 @@ const Signup = () => {
             <LoginSubmit type="submit" value="Verify OTP" />
           </LoginSubDiv>
         )}
-        <Link href={'/login'} >Already have an account?
+        <Link href={'/'} >Already have an account?
           <SignupLink >Login</SignupLink>
         </Link>
       </SignupContainer>
@@ -62,8 +60,7 @@ const Signup = () => {
 export default Signup;
 
 const Title = styled.div`
-
-  font-size: 60px;
+  font-size: 40px;
   font-style: bold;
   color: blueviolet;
   font-weight: 800;
@@ -78,76 +75,45 @@ const SignupLink = styled.button`
   border-radius: 7px;
   background-color: ${(props) => props.theme.bgSubDiv};
   cursor: pointer;
-  &:hover {
-    transform: scale(1.1); /* Scale the image up by 10% on hover */
-    transition: transform 0.2s ease;
-}
-
 `
 
 const LoginSubmit = styled.input`
   height: 40px;
   cursor: pointer;
   width: 150px;
-  background-color: #7DB954;
-
+  background-color: grey;
   font-size: large;
   padding: 10px;
   font-weight: 500;
   color: black;
-
-  &:hover {
-    transform: scale(1.1); /* Scale the image up by 10% on hover */
-    transition: transform 0.2s ease;
-}
-
 `
 
 const LoginEmail = styled.input`
   height: 40px;
   width: 300px;
-  background-color: white;
-
-`
-
-const LoginButton = styled.input`
-  height: 40px;
-  width: 300px;
+  background-color: #20b725;
   font-size: large;
   padding: 10px;
   font-weight: 500;
   color: ${(props) => props.theme.color};
   margin: 15px;
-  &:hover {
-    transform: scale(1.1); /* Scale the image up by 10% on hover */
-    transition: transform 0.2s ease;
-}
-
 `
 
 const LoginPassword = styled.input`
   height: 40px;
   width: 300px;
-
-  background-color: white;
-
+  background-color: #20b725;
   font-size: large;
   padding: 10px;
   margin-bottom: 15px;
   font-weight: 500;
   color: ${(props) => props.theme.color};
-
-  &:hover {
-    transform: scale(1.1); /* Scale the image up by 10% on hover */
-    transition: transform 0.2s ease;
-}
 `
 
 const OTPInput = styled.input`
   height: 40px;
   width: 300px;
-  background-color: green;
-
+  background-color: #20b725;
   font-size: large;
   padding: 10px;
   margin-top: 20px;
@@ -166,22 +132,10 @@ const LoginSubDiv = styled.form`
 
 const SignupContainer = styled.div`
   height: 70vh;
-
-  width: 50vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-  background-color: off-white;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 5px solid ${(props) => props.theme.color};
-  border-radius: 8px;
-
 `
 
 const ErrorMessage = styled.div`
