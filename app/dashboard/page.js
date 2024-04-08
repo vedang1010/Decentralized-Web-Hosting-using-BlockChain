@@ -3,11 +3,45 @@ import Layout from "@/components/layout/Layout"
 import Link from "next/link"
 import styled from 'styled-components'
 import { useRouter } from "next/navigation"
+import { getAuth } from "firebase/auth"
+import { initFirebase } from "@/Config/firebaseApp"
+import {useAuthState} from "react-firebase-hooks/auth"
+
 const dashboard = () => {
+  initFirebase();
   const router = useRouter(); // Initialize useRouter hook
+  const auth=getAuth();
+  const [user,loading]=useAuthState(auth);
+  // console.log(app);
+  // const callApi=async()=>{
+  //   const token = await user.getIdToken();
+
+  //   const echoEndpoint = "https://jwtecho.pixegami.io";
+  //   const certStr=""
+  //   const audience =""
+  //   const verifigation='${echoEndpoint}/verify?audience=${audience}&cert_str=${certStr}'
+  //   const requestInfo={
+  //     headers:{
+  //       Authorization:"Bearer "+token,
+  //     },
+  //   }
+  //   const response=await fetch(echoEndpoint,requestInfo)
+  //   const responseBody=await response.json()
+  //   console.log(token)
+  //   console.log(responseBody)
+  // }
+  if(loading){
+    return <div>Loading....</div>;
+  }
+  if(!user){
+    router.push('/login');
+
+    return <div>Please sign in to continue</div>;
+  }
   const handleFileManagerClick = () => {
     router.push('/file'); // Navigate to the files page
   };
+
   return (
     <Layout>
       <DashboardTopLeft>
