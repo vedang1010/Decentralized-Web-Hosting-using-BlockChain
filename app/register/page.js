@@ -35,11 +35,12 @@ const Signup = () => {
   return (
     <Layout>
       <SignupContainer>
-        <Title>Sign Up</Title>
+        <Title>Register</Title>
         <LoginSubDiv onSubmit={handleSubmit}>
-          <LoginEmail placeholder="Email" type="email" required/>
-          <LoginPassword placeholder="Password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-          <LoginPassword placeholder="Confirm Password" type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <LoginButton placeholder="name" type="text" required/>
+          <LoginButton placeholder="Email" type="email" required/>
+          <LoginButton placeholder="Password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <LoginButton placeholder="Confirm Password" type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
           {!passwordsMatch && <ErrorMessage>Passwords do not match</ErrorMessage>}
           <LoginSubmit type="submit" value="Get OTP" />
         </LoginSubDiv>
@@ -49,7 +50,7 @@ const Signup = () => {
             <LoginSubmit type="submit" value="Verify OTP" />
           </LoginSubDiv>
         )}
-        <Link href={'/'} >Already have an account?
+        <Link href={'/login'} >Already have an account?
           <SignupLink >Login</SignupLink>
         </Link>
       </SignupContainer>
@@ -60,7 +61,7 @@ const Signup = () => {
 export default Signup;
 
 const Title = styled.div`
-  font-size: 40px;
+  font-size: 60px;
   font-style: bold;
   color: blueviolet;
   font-weight: 800;
@@ -88,7 +89,7 @@ const LoginSubmit = styled.input`
   color: black;
 `
 
-const LoginEmail = styled.input`
+const LoginButton = styled.input`
   height: 40px;
   width: 300px;
   background-color: #20b725;

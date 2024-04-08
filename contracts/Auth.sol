@@ -1,128 +1,39 @@
+// SPDX-License-Identifier: MIT
 pragma solidity >=0.7.0 <0.9.0;
 
-contract Auth {
-    struct UserDetail {
-        address addr;
-        string name;
-        string password;
-        bool isUserLoggedIn;
+contract Authentication {
+    uint256 public nbOfUsers;
+
+    struct User {
+        string signatureHash;
+        address userAddress;
     }
 
-    mapping(address => UserDetail) user;
+    mapping(address => User) private user;
 
-    // user registration function
-    function registerUser(
-        address _address,
-        string memory _name,
-        string memory _password
-    ) public notAdmin returns (bool) {
-        require(user[_address].addr != msg.sender);
-        user[_address].addr = _address;
-        user[_address].name = _name;
-        user[_address].password = _password;
-        user[_address].isUserLoggedIn = false;
-        return true;
+    constructor() {
+        nbOfUsers = 0;
     }
 
-    // user login function
-    function loginUser(address _address, string memory _password)
-        public
-        returns (bool)
-    {
-        if (
-            keccak256(abi.encodePacked(user[_address].password)) ==
-            keccak256(abi.encodePacked(_password))
-        ) {
-            user[_address].isUserLoggedIn = true;
-            return user[_address].isUserLoggedIn;
-        } else {
-            return false;
-        }
+    function register(string memory _signature) public {
+        require(
+            user[msg.sender].userAddress ==
+                address(0x0000000000000000000000000000000000000000),
+            "already registered"
+        );
+
+        user[msg.sender].signatureHash = _signature;
+        user[msg.sender].userAddress = msg.sender;
+        nbOfUsers++;
     }
 
-    // check the user logged In or not
-    function checkIsUserLogged(address _address)
-        public
-        view
-        returns (bool)
-    {
-        return (user[_address].isUserLoggedIn);
+    function getSignatureHash() public view returns (string memory) {
+        require(msg.sender == user[msg.sender].userAddress, "Not allowed");
+
+        return user[msg.sender].signatureHash;
     }
 
-    // logout the user
-    function logoutUser(address _address) public {
-        user[_address].isUserLoggedIn = false;
-    }
-
-    struct AdminDetail {
-        address adminAddress;
-        string name;
-        string password;
-        bool isAdminLoggedIn;
-    }
-    mapping(address => AdminDetail) admin;
-    // admin registration function
-
-    address adminAddress;
-
-    constructor() public {
-        adminAddress = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
-    }
-
-    modifier onlyAdmin() {
-        require(msg.sender == adminAddress);
-        _;
-    }
-
-    modifier notAdmin() {
-        require(msg.sender != adminAddress);
-        _;
-    }
-
-    function registerAdmin(
-        address _address,
-        string memory _name,
-        string memory _password
-    ) public onlyAdmin returns (bool) {
-        require(admin[_address].adminAddress != msg.sender);
-        admin[_address].adminAddress = _address;
-        admin[_address].name = _name;
-        admin[_address].password = _password;
-        admin[_address].isAdminLoggedIn = false;
-        return true;
-    }
-
-    // admin login function
-    function loginAdmin(address _address, string memory _password)
-        public
-        returns (bool)
-    {
-        if (
-            keccak256(abi.encodePacked(admin[_address].password)) ==
-            keccak256(abi.encodePacked(_password))
-        ) {
-            admin[_address].isAdminLoggedIn = true;
-            return admin[_address].isAdminLoggedIn;
-        } else {
-            return false;
-        }
-    }
-
-    // check the admin logged In or not
-    function checkIsAdminLogged(address _address)
-        public
-        view
-        returns (bool)
-    {
-        return (admin[_address].isAdminLoggedIn);
-    }
-
-    // logout the admin
-    function logoutAdmin(address _address) public {
-        admin[_address].isAdminLoggedIn = false;
-    }
-
-    function getAdminBalance(address _address) public view returns (uint256) {
-        return (admin[_address].adminAddress.balance);
+    function getUserAddress() public view returns (address) {
+        return user[msg.sender].userAddress;
     }
 }

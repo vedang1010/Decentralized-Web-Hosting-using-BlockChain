@@ -3,9 +3,54 @@ import Image from "next/image";
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+// import app from ""
+import { initFirebase } from "@/Config/firebaseApp";
+import {useAuthState} from "react-firebase-hooks/auth"
 
+// To apply the default browser preference instead of explicitly setting it.
+// auth.useDeviceLanguage();
 const LoginPage = () => {
+  initFirebase();
   const router = useRouter(); // Initialize useRouter hook
+
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+  const [user,loading]=useAuthState(auth);
+  // console.log(app);
+  if(loading){
+    return <div>Loading....</div>;
+  }
+  if(user){
+    router.push('/dashboard');
+
+    return <div>Welcome {user.displayName}</div>;
+  }
+  const signIn=async ()=>{
+    const result=await signInWithPopup(auth, provider);
+    console.log(result)
+    // .then((result) => {
+    //     // This gives you a Google Access Token. You can use it to access the Google API.
+    //     const credential = GoogleAuthProvider.credentialFromResult(result);
+    //     const token = credential.accessToken;
+    //     // The signed-in user info.
+    //     const user = result.user;
+    //     // IdP data available using getAdditionalUserInfo(result)
+    //     // ...
+    //   }).catch((error) => {
+    //     // Handle Errors here.
+    //     const errorCode = error.code;
+    //     const errorMessage = error.message;
+    //     // The email of the user's account used.
+    //     const email = error.customData.email;
+    //     // The AuthCredential type that was used.
+    //     const credential = GoogleAuthProvider.credentialFromError(error);
+    //     // ...
+    //   });
+      
+}
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform login logic
@@ -15,7 +60,7 @@ const LoginPage = () => {
   return (
     <LoginContainer>
       <Title>Login</Title>
-      <LoginSubContainer>
+      <LoginSubContainer onClick={signIn}>
         <StyledText>
           Login with Google
         </StyledText>
@@ -23,7 +68,7 @@ const LoginPage = () => {
       </LoginSubContainer>
       <LoginSubDiv onSubmit={handleSubmit}> {/* Add onSubmit event handler to the form */}
         <LoginEmail placeholder="Email" type="email" required />
-        <LoginPassword placeholder="Password" type="password" required/>
+        <LoginPassword placeholder="Password" type="password" required />
         <LoginSubmit value="Login" type="submit" />
         <ForgetLink onClick={() => router.push('/ResetPassword')}> {/* Use router.push for navigation */}
           Forgot Password?

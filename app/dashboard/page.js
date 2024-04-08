@@ -3,14 +3,51 @@ import Layout from "@/components/layout/Layout"
 import Link from "next/link"
 import styled from 'styled-components'
 import { useRouter } from "next/navigation"
+import { getAuth } from "firebase/auth"
+import { initFirebase } from "@/Config/firebaseApp"
+import {useAuthState} from "react-firebase-hooks/auth"
+
 const dashboard = () => {
+  initFirebase();
   const router = useRouter(); // Initialize useRouter hook
+  const auth=getAuth();
+  const [user,loading]=useAuthState(auth);
+  // console.log(app);
+  // const callApi=async()=>{
+  //   const token = await user.getIdToken();
+
+  //   const echoEndpoint = "https://jwtecho.pixegami.io";
+  //   const certStr=""
+  //   const audience =""
+  //   const verifigation='${echoEndpoint}/verify?audience=${audience}&cert_str=${certStr}'
+  //   const requestInfo={
+  //     headers:{
+  //       Authorization:"Bearer "+token,
+  //     },
+  //   }
+  //   const response=await fetch(echoEndpoint,requestInfo)
+  //   const responseBody=await response.json()
+  //   console.log(token)
+  //   console.log(responseBody)
+  // }
+  if(loading){
+    return <div>Loading....</div>;
+  }
+  if(!user){
+    router.push('/login');
+
+    return <div>Please sign in to continue</div>;
+  }
   const handleFileManagerClick = () => {
     router.push('/file'); // Navigate to the files page
   };
   return (
     <Layout>
       <DashboardContainer>
+
+    <SignOutContainer onClick={()=>auth.signOut()}>
+Sign out
+    </SignOutContainer>
         <DashboardTopLeft>
           <Header>Website Name</Header>
           <Subheader>Created on 20/11/10</Subheader>
@@ -18,7 +55,7 @@ const dashboard = () => {
         <DashboardContent>
           <FileManager onClick={handleFileManagerClick}>File Manager</FileManager>
           <VisitorCount>
-            <Content>Visitor Count</Content>
+            <Content >Visitor Count</Content>
             <Logs onClick={() => router.push('/access-logs')}>See Access logs</Logs>
           </VisitorCount>
         </DashboardContent>
@@ -38,9 +75,13 @@ const Logs = styled.div`
     color: blue;
   }
 `;
-
-const Content = styled.div`
+const SignOutContainer=styled.button`
+border:2px solid red;
+cursor :pointer;
+`
+const Content = styled.button`
     font-size: 16px;
+    cursor:pointer;
 `
 const DashboardContainer = styled.div`
   display: flex;

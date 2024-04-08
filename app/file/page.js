@@ -5,12 +5,22 @@ import { TailSpin } from 'react-loader-spinner';
 import Editor from "@monaco-editor/react";
 import styled from 'styled-components';
 import { FleekSdk, ApplicationAccessTokenService } from '@fleekxyz/sdk';
+import { getAuth } from "firebase/auth"
+import { initFirebase } from "@/Config/firebaseApp"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { getDatabase, ref, set,onValue } from "firebase/database";
 
+// const applicationService = new ApplicationAccessTokenService({ clientId: 'client_x5nxBa5Iv6wXy6wK75UB' });
 const applicationService = new ApplicationAccessTokenService({ clientId: 'client_fJWEyEhzVTOq9yMX3O78' });
 const fleekSdk = new FleekSdk({ accessTokenService: applicationService });
 
 
 const Files = () => {
+    const app = initFirebase();
+    const auth = getAuth();
+    const [user, loading] = useAuthState(auth);
+    const database = getDatabase(app);
+
     const [files, setFiles] = useState([]);
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadLoading, setUploadLoading] = useState(false);
@@ -24,9 +34,30 @@ const Files = () => {
     const [selectedFileName, setSelectedFileName] = useState(""); // Assuming selectedFileName is part of state
     const [changesMade, setChangesMade] = useState(false);
 
+    const [domainName, setDomainName] = useState('');
+
+    const handleDomainNameChange = (event) => {
+        setDomainName(event.target.value);
+    };
+
+    const createFolder = () => {
+        const folderName = prompt("Enter the name for the new folder:");
+
+        if (folderName) {
+            // Create an empty folder object with the provided name
+            const newFolder = {
+                name: folderName,
+                type: "folder",
+                content: [], // You can add additional properties for folders if needed
+            };
+
+            // Update the state with the new folder
+            setFiles([...files, newFolder]);
+        }
+    };
 
 
- 
+
     // Function to handle saving the edited content
     // Function to handle saving the edited content
 
@@ -80,17 +111,99 @@ const Files = () => {
 
             try {
                 setUploadLoading(true);
-                const added = await fleekSdk.ipfs().addAll({ files: ipfsFiles, wrapWithDirectory: true, });
+                const added = await fleekSdk.ipfs().addAll(ipfsFiles);
+
+                // Store added.cid in Firebase Realtime Database
+                // const userRef = firebase.database().ref(`users/${user.uid}/uploads`);
+                // for (const file of added) {
+                //     userRef.push({ cid: file.cid });
+                // }
+                console.log(added[added.length - 1].cid._baseCache.get('z'))
+
+                const reference = ref(database, "users/" + user.uid + "/uploads");
+                let indexHtmlCID = null;
+                var count = 0;
+                for (const file of added) {
+                    if (file.path === "index.html") {
+                        indexHtmlCID = count;
+                        break;
+                    }
+                    count++;
+                }
+                // console.log(added[added.length-1].)
+                set(reference, {
+                    // username: name,
+                    // email: email,
+                    // profile_picture : imageUrl
+                    domain: domainName,
+                    cid: added[indexHtmlCID].cid._baseCache.get('z')
+                });
+                console.log("error")
+                const filesReference = ref(database, "users/" + user.uid + "/uploads/files");
+
+                for (let i = 0; i < added.length; i++) {
+                    const file = added[i];
+                    const fileName = file.path;
+                    const cid = file.cid._baseCache.get('z');
+                    const filesReference2 = ref(database, "users/" + user.uid + "/uploads/files/file" + i)
+                    // Use `set` instead of `push` to directly set the data under a specific path
+                    // Here, we concatenate the `filesReference` path with the `fileName`
+                    set(filesReference2, {
+                        name: fileName,
+                        cid: cid
+                    });
+                }
+                console.log("error")
+
+
 
                 setSelectedFiles([]);
                 setUploadLoading(false);
-                // console.log(added.slice)
+                console.log(added);
+                console.log(added.length);
+                // console.log(fleekSdk.ipfs().)
+
+                // Create a reference to the root node of your database
+                const rootRef = ref(database,"users");
+
+                // Iterate over each user's node
+                onValue(rootRef, (Snapshot) => {
+                    console.log(added.length);
+
+                    const users = Snapshot.val();
+                    for (var userId in users) {
+                        console.log(userId);
+                        const userRef = ref(database, `users/${userId}/uploads/files`);
+                        onValue(userRef, (userSnapshot) => {
+                            const files = userSnapshot.val();
+                
+                            // Iterate over each file
+                            for (const fileName in files) {
+                                const cid = files[fileName].cid;
+                
+                                console.log(`User: ${userId}, File Name: ${fileName}, CID: ${cid}`);
+                            }
+                        });
+                    
+                    }
+                    // const userRef = ref(database, userId+"/uploads/files");
+
+                    // Iterate over each file of the user
+                    // forEachChild(userRef, (fileSnapshot) => {
+                    //     const fileName = fileSnapshot.key;
+                    //     const cid = fileSnapshot.val().cid;
+
+                    //     console.log(`User: ${userId}, File Name: ${fileName}, CID: ${cid}`);
+                    // });
+                });
+
             } catch (error) {
                 console.error('Error creating folder and uploading:', error);
                 setUploadLoading(false);
             }
         }
     };
+
 
 
     const getLanguageFromExtension = (fileName) => {
@@ -165,11 +278,11 @@ const Files = () => {
         // Close the editor
         setEditorOpen(false);
     };
-    const pages={
-        selectedFileName:{
-            name:selectedFileName,
-            language:getLanguageFromExtension(selectedFileName),
-            value:"",
+    const pages = {
+        selectedFileName: {
+            name: selectedFileName,
+            language: getLanguageFromExtension(selectedFileName),
+            value: "",
         }
     }
     const handleSave = () => {
@@ -203,9 +316,9 @@ const Files = () => {
         setChangesMade(true);
 
         // console.log(value)
-      }
+    }
 
-      const handleSaveOrClose = () => {
+    const handleSaveOrClose = () => {
         if (changesMade) {
             // If changes have been made, save the content
             handleSave();
@@ -229,12 +342,25 @@ const Files = () => {
                         </FileItem>
                     ))}
                 </FilesList>
+                {/* Input field for domain name */}
+                <DomainInputContainer>
+                    <DomainInputField
+                        type="text"
+                        placeholder="Enter domain name"
+                        value={domainName}
+                        onChange={handleDomainNameChange}
+                    />
 
+                </DomainInputContainer>
                 {/* Buttons */}
                 <ButtonsContainer>
                     <input type="file" onChange={handleFileSelect} multiple />
+                    {/* <input type="file" onChange={handleFileSelect} multiple /> */}
                     <Button onClick={uploadFiles}>Upload Files</Button>
-                    <Button onClick={handlePrintData}>Print Files Data</Button> {/* Button to print files data */}
+                    {/* <Button onClick={handlePrintData}>Print Files Data</Button>  */}
+                    {/* <Button onClick={createFolder}>Create Folder</Button> Button to create a folder */}
+
+                    {/* Button to print files data */}
                     <Button onClick={createFolderAndUpload}>Create Folder & Upload</Button> {/* Button to create folder and upload */}
                     {uploadLoading ? (
                         <TailSpin color='#fff' height={20} />
@@ -256,7 +382,7 @@ const Files = () => {
                             width="80vw"
                             language={getLanguageFromExtension(selectedFileName)}
                             defaultValue={editorContent}
-                            onChange={handleEditorChange} value={pages.selectedFileName.value} 
+                            onChange={handleEditorChange} value={pages.selectedFileName.value}
                         />
                         <SaveButton onClick={handleSaveOrClose}>Save</SaveButton> {/* Save button */}
 
@@ -267,6 +393,23 @@ const Files = () => {
         </Layout>
     );
 };
+
+
+const DomainInputContainer = styled.div`
+    margin-bottom: 20px;
+`;
+
+const DomainInputLabel = styled.label`
+    display: block;
+    margin-bottom: 5px;
+`;
+
+const DomainInputField = styled.input`
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+`;
 
 const FileContainer = styled.div`
   width: 100%;
