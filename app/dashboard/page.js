@@ -41,25 +41,33 @@ const dashboard = () => {
   const handleFileManagerClick = () => {
     router.push('/file'); // Navigate to the files page
   };
+
   return (
     <Layout>
-      <DashboardContainer>
-
-    <SignOutContainer onClick={()=>auth.signOut()}>
-Sign out
-    </SignOutContainer>
-        <DashboardTopLeft>
+      <DashboardTopLeft>
           <Header>Website Name</Header>
           <Subheader>Created on 20/11/10</Subheader>
         </DashboardTopLeft>
-        <DashboardContent>
+
+        <ImageContainer>
+                <div>
+                    <StyledImage src="/ws5.png" alt="ws5" width={1000} height={1000} />
+                    <StyledImage src="/ws2.png" alt="ws2" width={1000} height={1000} />
+                    <StyledImage src="/ws3.jpg" alt="ws3" width={1000} height={1000} />
+                    <StyledImage src="/ws1.png" alt="ws1" width={1000} height={1000} />
+                    <StyledImage src="/ws4.jpg" alt="ws4" width={1000} height={1000} />
+
+                </div>
+          </ImageContainer>
+
+          <DashboardContent>
           <FileManager onClick={handleFileManagerClick}>File Manager</FileManager>
           <VisitorCount>
-            <Content >Visitor Count</Content>
+            <Content>Visitor Count</Content>
             <Logs onClick={() => router.push('/access-logs')}>See Access logs</Logs>
           </VisitorCount>
         </DashboardContent>
-      </DashboardContainer>
+      
     </Layout>
   )
 }
