@@ -8,7 +8,7 @@ import { FleekSdk, ApplicationAccessTokenService } from '@fleekxyz/sdk';
 import { getAuth } from "firebase/auth"
 import { initFirebase } from "@/Config/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { getDatabase, ref, set,onValue } from "firebase/database";
+import { getDatabase, ref, set, onValue } from "firebase/database";
 
 // const applicationService = new ApplicationAccessTokenService({ clientId: 'client_x5nxBa5Iv6wXy6wK75UB' });
 const applicationService = new ApplicationAccessTokenService({ clientId: 'client_fJWEyEhzVTOq9yMX3O78' });
@@ -164,7 +164,7 @@ const Files = () => {
                 // console.log(fleekSdk.ipfs().)
 
                 // Create a reference to the root node of your database
-                const rootRef = ref(database,"users");
+                const rootRef = ref(database, "users");
 
                 // Iterate over each user's node
                 onValue(rootRef, (Snapshot) => {
@@ -176,15 +176,15 @@ const Files = () => {
                         const userRef = ref(database, `users/${userId}/uploads/files`);
                         onValue(userRef, (userSnapshot) => {
                             const files = userSnapshot.val();
-                
+
                             // Iterate over each file
                             for (const fileName in files) {
                                 const cid = files[fileName].cid;
-                
+
                                 console.log(`User: ${userId}, File Name: ${fileName}, CID: ${cid}`);
                             }
                         });
-                    
+
                     }
                     // const userRef = ref(database, userId+"/uploads/files");
 
@@ -329,45 +329,36 @@ const Files = () => {
     };
     return (
         <Layout>
-            <FileContainer>
-                {/* Your existing code for file list and buttons */}
-                {/* File list */}
-                <Header>List of Files</Header>
-                <FilesList>
-                    {files.map((file, index) => (
-                        <FileItem key={index} onClick={() => handleFileClick(file.name)}>
-                            <FileName>{file.name}</FileName>
-                            <CID>{file.cid}</CID> {/* Display the CID */}
-                            <DeleteButton onClick={() => handleFileDelete(file.name)}>Delete</DeleteButton>
-                        </FileItem>
-                    ))}
-                </FilesList>
-                {/* Input field for domain name */}
-                <DomainInputContainer>
-                    <DomainInputField
-                        type="text"
-                        placeholder="Enter domain name"
-                        value={domainName}
-                        onChange={handleDomainNameChange}
-                    />
-
-                </DomainInputContainer>
-                {/* Buttons */}
-                <ButtonsContainer>
+            <Input>
+                <div>
                     <input type="file" onChange={handleFileSelect} multiple />
-                    {/* <input type="file" onChange={handleFileSelect} multiple /> */}
-                    <Button onClick={uploadFiles}>Upload Files</Button>
-                    {/* <Button onClick={handlePrintData}>Print Files Data</Button>  */}
-                    {/* <Button onClick={createFolder}>Create Folder</Button> Button to create a folder */}
+                </div>
+            </Input>
+            <ImageContainer>
+                <div>
+                    <StyledImage src="/ws5.png" alt="ws5" width={1000} height={1000} />
+                    <StyledImage src="/ws2.png" alt="ws2" width={1000} height={1000} />
+                    <StyledImage src="/ws3.jpg" alt="ws3" width={1000} height={1000} />
+                    <StyledImage src="/ws1.png" alt="ws1" width={1000} height={1000} />
+                    <StyledImage src="/ws4.jpg" alt="ws4" width={1000} height={1000} />
 
-                    {/* Button to print files data */}
-                    <Button onClick={createFolderAndUpload}>Create Folder & Upload</Button> {/* Button to create folder and upload */}
-                    {uploadLoading ? (
-                        <TailSpin color='#fff' height={20} />
-                    ) : uploaded ? (
-                        <Button>Files uploaded successfully</Button>
-                    ) : null}
-                </ButtonsContainer>
+                </div>
+
+            </ImageContainer>
+            {/* Buttons */}
+            <ButtonsContainer>
+                <Button onClick={uploadFiles}>Upload Files</Button>
+                {/* <Button onClick={handlePrintData}>Print Files Data</Button> Button to print files data */}
+                <Button onClick={createFolderAndUpload}>Create Folder & Upload</Button> {/* Button to create folder and upload */}
+                {uploadLoading ? (
+                    <TailSpin color='#fff' height={20} />
+                ) : uploaded ? (
+                    <Button>Files uploaded successfully</Button>
+                ) : null}
+            </ButtonsContainer>
+
+            <FileContainer>
+
 
                 {/* Loading message */}
                 {loadingFileContent ? (
@@ -389,6 +380,19 @@ const Files = () => {
                         <CloseEditorButton onClick={handleCloseEditor}>Close Editor</CloseEditorButton>
                     </EditorContainer>
                 )}
+
+                {/* Your existing code for file list and buttons */}
+                {/* File list */}
+                <Header>List of Files</Header>
+                <FilesList>
+                    {files.map((file, index) => (
+                        <FileItem key={index} onClick={() => handleFileClick(file.name)}>
+                            <FileName>{file.name}</FileName>
+                            <CID>{file.cid}</CID> {/* Display the CID */}
+                            <DeleteButton onClick={() => handleFileDelete(file.name)}>Delete</DeleteButton>
+                        </FileItem>
+                    ))}
+                </FilesList>
             </FileContainer>
         </Layout>
     );
@@ -399,10 +403,7 @@ const DomainInputContainer = styled.div`
     margin-bottom: 20px;
 `;
 
-const DomainInputLabel = styled.label`
-    display: block;
-    margin-bottom: 5px;
-`;
+
 
 const DomainInputField = styled.input`
     width: 100%;
@@ -410,10 +411,108 @@ const DomainInputField = styled.input`
     border: 1px solid #ccc;
     border-radius: 4px;
 `;
+// return (
+//     <Layout>
+//         <Input>
+//             <div>
+//                 <input type="file" onChange={handleFileSelect} multiple />
+//             </div>
+//         </Input>
+
+//         {/* Buttons */}
+//         <ButtonsContainer>
+//             <Button onClick={uploadFiles}>Upload Files</Button>
+//             <Button onClick={handlePrintData}>Print Files Data</Button> {/* Button to print files data */}
+//             <Button onClick={createFolderAndUpload}>Create Folder & Upload</Button> {/* Button to create folder and upload */}
+//             {uploadLoading ? (
+//                 <TailSpin color='#fff' height={20} />
+//             ) : uploaded ? (
+//                 <Button>Files uploaded successfully</Button>
+//             ) : null}
+//         </ButtonsContainer>
+
+//         <FileContainer>
+
+
+//             {/* Loading message */}
+//             {loadingFileContent ? (
+//                 <LoadingMessage>Loading file content...</LoadingMessage>
+//             ) : null}
+
+//             {/* Editor */}
+//             {editorOpen && (
+//                 <EditorContainer>
+//                     <Editor
+//                         height="80vh"
+//                         width="80vw"
+//                         language={getLanguageFromExtension(selectedFileName)}
+//                         defaultValue={editorContent}
+//                         onChange={handleEditorChange} value={pages.selectedFileName.value}
+//                     />
+//                     <SaveButton onClick={handleSaveOrClose}>Save</SaveButton> {/* Save button */}
+
+//                     <CloseEditorButton onClick={handleCloseEditor}>Close Editor</CloseEditorButton>
+//                 </EditorContainer>
+//             )}
+
+//             {/* Your existing code for file list and buttons */}
+//             {/* File list */}
+//             <Header>List of Files</Header>
+//             <FilesList>
+//                 {files.map((file, index) => (
+//                     <FileItem key={index} onClick={() => handleFileClick(file.name)}>
+//                         <FileName>{file.name}</FileName>
+//                         <CID>{file.cid}</CID> {/* Display the CID */}
+//                         <DeleteButton onClick={() => handleFileDelete(file.name)}>Delete</DeleteButton>
+//                     </FileItem>
+//                 ))}
+//             </FilesList>
+//         </FileContainer>
+
+//     </Layout>
+// );
+// };
+
+
+const Input = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100%;
+`;
+
+const ImageContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0px;
+    width: 100%;
+    height: 250px;
+    align-items: center;
+`;
+
+const StyledImage = styled.img`
+  /* Add your styles here */
+  border-radius: 5px;
+  height: 200px;
+  width: auto;
+  margin: 0;
+  &:first-child {
+    margin-right: 0px; /* Add some space between the images */
+  }
+  /* margin-left: 50px; */ 
+  &:hover {
+    transform: scale(1.2); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
+
+`;
 
 const FileContainer = styled.div`
   width: 100%;
   height: 90vh;
+  overflow-y: auto;
 `;
 
 const Header = styled.h1`
@@ -452,8 +551,9 @@ const DeleteButton = styled.button`
 const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 20px;
+  flex-direction: row;
 `;
 
 const Button = styled.button`
@@ -462,14 +562,20 @@ const Button = styled.button`
   align-items: center;
   width: 250px;
   padding: 15px;
-  color: white;
-  background-color: #00b712;
-  background-image: linear-gradient(180deg, #00b712 0%, #5aff15 80%);
+  border-radius: 25px;
+  border: 5px solid ${(props) => props.theme.color};
+  color: ${(props) => props.theme.color};
+  background-color: ${(props) => props.theme.bgSubDiv};
   border: none;
   margin-top: 30px;
   cursor: pointer;
   font-weight: bold;
   font-size: large;
+  margin-right: 10px;
+  &:hover {
+    transform: scale(1.1); /* Scale the image up by 10% on hover */
+    transition: transform 0.2s ease;
+}
 `;
 
 const LoadingMessage = styled.p`
@@ -545,5 +651,142 @@ const SaveButton = styled.button`
     &:hover {
         background-color: #009f0e;
     }
-`;
+ `;
+// export default Files;
+
+// const FileContainer = styled.div`
+//   width: 100%;
+//   height: 90vh;
+// `;
+
+// const Header = styled.h1`
+//   font-size: 24px;
+//   font-weight: bold;
+//   text-align: center;
+//   padding-top: 20px;
+// `;
+
+// const FilesList = styled.ul`
+//   list-style: none;
+//   padding: 0;
+// `;
+
+// const FileItem = styled.li`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 10px;
+//   cursor: pointer;
+// `;
+
+// const FileName = styled.span`
+//   margin-right: 10px;
+// `;
+
+// const DeleteButton = styled.button`
+//   background-color: red;
+//   color: white;
+//   border: none;
+//   padding: 5px 10px;
+//   border-radius: 5px;
+//   cursor: pointer;
+// `;
+
+// const ButtonsContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 20px;
+// `;
+
+// const Button = styled.button`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 250px;
+//   padding: 15px;
+//   color: white;
+//   background-color: #00b712;
+//   background-image: linear-gradient(180deg, #00b712 0%, #5aff15 80%);
+//   border: none;
+//   margin-top: 30px;
+//   cursor: pointer;
+//   font-weight: bold;
+//   font-size: large;
+// `;
+
+// const LoadingMessage = styled.p`
+//   text-align: center;
+//   margin-top: 20px;
+// `;
+
+// const IDEContent = styled.div`
+//   margin-top: 20px;
+//   border: 1px solid #ccc;
+//   padding: 20px;
+// `;
+
+// const IDEHeader = styled.h2`
+//   font-size: 20px;
+//   font-weight: bold;
+//   margin-bottom: 10px;
+// `;
+
+// const IDEBody = styled.pre`
+//   white-space: pre-wrap;
+//   font-family: monospace;
+// `;
+
+// const CID = styled.span`
+//   font-size: 14px;
+//   color: #888; /* You can adjust the color according to your preference */
+// `;
+// const EditorContainer = styled.div`
+//     position: fixed;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     z-index: 999; /* Ensure the editor is above other elements */
+//     background-color: white;
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     padding: 20px;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// `;
+
+// const StyledEditor = styled(Editor)`
+//     width: 100vw;
+// `;
+
+// const CloseEditorButton = styled.button`
+//     position: absolute;
+//     top: 10px;
+//     right: 10px;
+//     padding: 5px 10px;
+//     background-color: #ccc;
+//     border: none;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     font-weight: bold;
+// `;
+
+// // Use these styled components in your component.
+// const SaveButton = styled.button`
+//     position: absolute;
+//     bottom: 10px;
+//     right: 10px;
+//     padding: 8px 16px;
+//     background-color: #00b712;
+//     color: white;
+//     border: none;
+//     border-radius: 5px;
+//     cursor: pointer;
+//     font-size: 16px;
+//     font-weight: bold;
+//     transition: background-color 0.3s ease;
+
+//     &:hover {
+//         background-color: #009f0e;
+//     }
+// `;
 export default Files;
