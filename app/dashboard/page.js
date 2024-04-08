@@ -1,17 +1,47 @@
 "use client"
+import React, { useState, useEffect } from 'react';
 import Layout from "@/components/layout/Layout"
 import Link from "next/link"
 import styled from 'styled-components'
 import { useRouter } from "next/navigation"
-import { getAuth } from "firebase/auth"
-import { initFirebase } from "@/Config/firebaseApp"
-import {useAuthState} from "react-firebase-hooks/auth"
+import { getAuth } from "firebase/auth";
+import { initFirebase } from "@/Config/firebaseApp";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 const dashboard = () => {
-  initFirebase();
+  const app=initFirebase();
+  const database = getDatabase(app);
   const router = useRouter(); // Initialize useRouter hook
   const auth=getAuth();
   const [user,loading]=useAuthState(auth);
+  const [websites, setWebsites] = useState([]);
+
+
+  // console.log(user.uid)
+  useEffect(() => {
+    const rootRef = ref(database, "users");
+    onValue(rootRef, (snapshot) => {
+      const users = snapshot.val();
+      const updatedWebsites = [];
+      for (const userId in users) {
+        // if(userId===user.uid){
+        const userData = users[userId];
+        const { domain, cid } = userData?.uploads || {}; // Access domain and cid from user's uploads data
+        if (domain && cid) {
+          updatedWebsites.push({ userId, domain, cid });
+        // }
+      }
+    }
+
+      setWebsites(updatedWebsites);
+    });
+  
+}, [database]);
+const loggedInUserWebsite = websites.find(website => website.userId === user.uid);
+const loggedInUserDomain = loggedInUserWebsite ? loggedInUserWebsite.domain : ''; // Domain of the logged-in user
+const loggedInUserCID = loggedInUserWebsite ? loggedInUserWebsite.cid : ''; // CID of the logged-in user
+
   // console.log(app);
   // const callApi=async()=>{
   //   const token = await user.getIdToken();
@@ -30,6 +60,13 @@ const dashboard = () => {
   //   console.log(token)
   //   console.log(responseBody)
   // }
+  const handleSignOut = () => {
+    // Add your additional action here
+    console.log("Additional action before sign out");
+    // Call auth.signOut()
+    auth.signOut();
+    router.push("/login")
+  };
   if(loading){
     return <div>Loading....</div>;
   }
@@ -41,13 +78,14 @@ const dashboard = () => {
   const handleFileManagerClick = () => {
     router.push('/file'); // Navigate to the files page
   };
-
+console.log(websites);
   return (
     <Layout>
       <DashboardTopLeft>
-          <Header>Website Name</Header>
-          <Subheader>Created on 20/11/10</Subheader>
-          <SignOutContainer onClick={()=>auth.signOut()}>
+      <Header>{loggedInUserDomain}</Header> {/* Display the domain of the logged-in user */}
+      <CID target='blank' href={loggedInUserCID}>Visit Website</CID> {/* Display the CID of the logged-in user */}
+          <Subheader>Created on 08/04/2024</Subheader>
+          <SignOutContainer onClick={handleSignOut}>
 Sign out
     </SignOutContainer>
         </DashboardTopLeft>
@@ -66,8 +104,8 @@ Sign out
           <DashboardContent>
           <FileManager onClick={handleFileManagerClick}>File Manager</FileManager>
           <VisitorCount>
-            <Content>Visitor Count</Content>
-            <Logs onClick={() => router.push('/access-logs')}>See Access logs</Logs>
+            <Content onClick={() => router.push('/ide')}>Code Editor</Content>
+            <Logs ></Logs>
           </VisitorCount>
         </DashboardContent>
       
@@ -77,6 +115,15 @@ Sign out
 
 export default dashboard
 
+const CID=styled.a`
+color: blue;
+text-decoration: none;
+margin-left: 10px;
+
+&:hover {
+  text-decoration: underline;
+}
+`;
 
 const ImageContainer = styled.div`
     display: flex;
@@ -182,6 +229,7 @@ const VisitorCount = styled.div`
   background-color: #f2f2f2;
   width: 200px;
   padding: 10px;
+  cursor: pointer;
   height: 60px;
   border-radius: 5px;
   border: 1px solid;

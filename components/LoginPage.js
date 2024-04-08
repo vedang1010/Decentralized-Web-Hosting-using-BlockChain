@@ -212,7 +212,7 @@ const StyledImage = styled(Image)`
   /* Add your styles here */
   border-radius: 5px;
   height: 70px;
-  width: 50px
+  width: 50px;
   scale: 0.3;
   /* margin-left: 50px; */ 
 `
