@@ -8,13 +8,13 @@ import { getAuth } from "firebase/auth";
 import { initFirebase } from "@/Config/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getDatabase, ref, onValue } from "firebase/database";
-
+import {Toast} from "react-toastify"
 const dashboard = () => {
-  const app=initFirebase();
+  const app = initFirebase();
   const database = getDatabase(app);
   const router = useRouter(); // Initialize useRouter hook
-  const auth=getAuth();
-  const [user,loading]=useAuthState(auth);
+  const auth = getAuth();
+  const [user, loading] = useAuthState(auth);
   const [websites, setWebsites] = useState([]);
 
 
@@ -30,18 +30,23 @@ const dashboard = () => {
         const { domain, cid } = userData?.uploads || {}; // Access domain and cid from user's uploads data
         if (domain && cid) {
           updatedWebsites.push({ userId, domain, cid });
-        // }
+          // }
+        }
       }
-    }
 
       setWebsites(updatedWebsites);
     });
-  
-}, [database]);
-const loggedInUserWebsite = websites.find(website => website.userId === user.uid);
-const loggedInUserDomain = loggedInUserWebsite ? loggedInUserWebsite.domain : ''; // Domain of the logged-in user
-const loggedInUserCID = loggedInUserWebsite ? loggedInUserWebsite.cid : ''; // CID of the logged-in user
 
+  }, [database]);
+  var loggedInUserWebsite=""
+  var loggedInUserDomain=""
+  
+var loggedInUserCID=""
+  if (user) {
+     loggedInUserWebsite = websites.find(website => website.userId === user.uid);
+     loggedInUserDomain = loggedInUserWebsite ? loggedInUserWebsite.domain : ''; // Domain of the logged-in user
+     loggedInUserCID = loggedInUserWebsite ? loggedInUserWebsite.cid : ''; // CID of the logged-in user
+  }
   // console.log(app);
   // const callApi=async()=>{
   //   const token = await user.getIdToken();
@@ -64,13 +69,13 @@ const loggedInUserCID = loggedInUserWebsite ? loggedInUserWebsite.cid : ''; // C
     // Add your additional action here
     console.log("Additional action before sign out");
     // Call auth.signOut()
-    auth.signOut();
     router.push("/login")
+    auth.signOut();
   };
-  if(loading){
+  if (loading) {
     return <div>Loading....</div>;
   }
-  if(!user){
+  if (!user) {
     router.push('/login');
 
     return <div>Please sign in to continue</div>;
@@ -78,44 +83,44 @@ const loggedInUserCID = loggedInUserWebsite ? loggedInUserWebsite.cid : ''; // C
   const handleFileManagerClick = () => {
     router.push('/file'); // Navigate to the files page
   };
-console.log(websites);
+  console.log(websites);
   return (
     <Layout>
       <DashboardTopLeft>
-      <Header>{loggedInUserDomain}</Header> {/* Display the domain of the logged-in user */}
-      <CID target='blank' href={loggedInUserCID}>Visit Website</CID> {/* Display the CID of the logged-in user */}
-          <Subheader>Created on 08/04/2024</Subheader>
-          <SignOutContainer onClick={handleSignOut}>
-Sign out
-    </SignOutContainer>
-        </DashboardTopLeft>
+        <Header>{loggedInUserDomain}</Header> {/* Display the domain of the logged-in user */}
+        <CID target='blank' href={loggedInUserCID}>Visit Website</CID> {/* Display the CID of the logged-in user */}
+        <Subheader>Created on 08/04/2024</Subheader>
+        <SignOutContainer onClick={handleSignOut}>
+          Sign out
+        </SignOutContainer>
+      </DashboardTopLeft>
 
-        <ImageContainer>
-                <div>
-                    <StyledImage src="/ws5.png" alt="ws5" width={1000} height={1000} />
-                    <StyledImage src="/ws2.png" alt="ws2" width={1000} height={1000} />
-                    <StyledImage src="/ws3.jpg" alt="ws3" width={1000} height={1000} />
-                    <StyledImage src="/ws1.png" alt="ws1" width={1000} height={1000} />
-                    <StyledImage src="/ws4.jpg" alt="ws4" width={1000} height={1000} />
+      <ImageContainer>
+        <div>
+          <StyledImage src="/ws5.png" alt="ws5" width={1000} height={1000} />
+          <StyledImage src="/ws2.png" alt="ws2" width={1000} height={1000} />
+          <StyledImage src="/ws3.jpg" alt="ws3" width={1000} height={1000} />
+          <StyledImage src="/ws1.png" alt="ws1" width={1000} height={1000} />
+          <StyledImage src="/ws4.jpg" alt="ws4" width={1000} height={1000} />
 
-                </div>
-          </ImageContainer>
+        </div>
+      </ImageContainer>
 
-          <DashboardContent>
-          <FileManager onClick={handleFileManagerClick}>File Manager</FileManager>
-          <VisitorCount>
-            <Content onClick={() => router.push('/ide')}>Code Editor</Content>
-            <Logs ></Logs>
-          </VisitorCount>
-        </DashboardContent>
-      
+      <DashboardContent>
+        <FileManager onClick={handleFileManagerClick}>File Manager</FileManager>
+        <VisitorCount>
+          <Content onClick={() => router.push('/ide')}>Code Editor</Content>
+          <Logs ></Logs>
+        </VisitorCount>
+      </DashboardContent>
+
     </Layout>
   )
 }
 
 export default dashboard
 
-const CID=styled.a`
+const CID = styled.a`
 color: blue;
 text-decoration: none;
 margin-left: 10px;
@@ -245,5 +250,17 @@ const VisitorCount = styled.div`
     transition: transform 0.2s ease;
 }
 `
-const SignOutContainer=styled.button`
+const SignOutContainer = styled.button`
+
+   cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  margin: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 5px;
+  /* background-color: #006c87; */
+  background-color: ${(props)=>props.theme.bgDiv};
+
 `

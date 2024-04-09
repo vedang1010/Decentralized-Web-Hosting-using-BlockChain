@@ -6,15 +6,17 @@ const light={
     /*bgColor:"#E3FEF7",
     bgImage: 'linear-gradient(180deg, #E3FEF7 0%, #77B0AA 60%)',
     */
-    bgDiv:'#365486',
-    bgSubDiv:'365486'
+    bgDiv:'#006c87',
+    bgSubDiv:'365486',
+    textColor:'blue'
 }
 const dark={
     color: "#fff",
     bgColor:"#923cb5",
     bgImage: 'linear-gradient(180deg,#333333 5%,#000000 90%)',
     bgDiv:'black',
-    bgSubDiv:'rgb(33,36,41)'
+    bgSubDiv:'rgb(33,36,41)',
+    textColor:'white'
 }
 
 const themes ={

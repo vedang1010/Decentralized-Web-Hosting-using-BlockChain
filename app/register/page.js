@@ -38,19 +38,19 @@ const Signup = () => {
 
         <Title>Register</Title>
         <LoginSubDiv onSubmit={handleSubmit}>
-          <LoginButton placeholder="name" type="text" required/>
+          <LoginButton placeholder="Name" type="text" required/>
           <LoginButton placeholder="Email" type="email" required/>
           <LoginButton placeholder="Password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
           <LoginButton placeholder="Confirm Password" type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
           {!passwordsMatch && <ErrorMessage>Passwords do not match</ErrorMessage>}
-          <LoginSubmit type="submit" value="Get OTP" />
+          {/* <LoginSubmit type="submit" value="Get OTP" /> */}
         </LoginSubDiv>
         {showOTPInput && (
           <LoginSubDiv onSubmit={handleOTPSubmit}>
             <OTPInput placeholder="Enter OTP" type="text" required />
-            <LoginSubmit type="submit" value="Verify OTP" />
           </LoginSubDiv>
         )}
+            <LoginSubmit type="submit" value="Register" />
         <Link href={'/login'} >Already have an account?
           <SignupLink >Login</SignupLink>
         </Link>
@@ -88,19 +88,18 @@ const SignupLink = styled.button`
 const LoginSubmit = styled.input`
   height: 40px;
   cursor: pointer;
-  width: 150px;
-  background-color: #7DB954;
-
+  width: 100px;
+  background-color: ${(props) => props.theme.bgColor};
+  color:  white;
   font-size: large;
   padding: 10px;
   font-weight: 500;
+  border-radius: 8px;
   color: black;
-
   &:hover {
     transform: scale(1.1); /* Scale the image up by 10% on hover */
     transition: transform 0.2s ease;
 }
-
 `
 
 const LoginEmail = styled.input`
@@ -113,15 +112,17 @@ const LoginEmail = styled.input`
 const LoginButton = styled.input`
   height: 40px;
   width: 300px;
+  background-color: white;
   font-size: large;
   padding: 10px;
   font-weight: 500;
   color: ${(props) => props.theme.color};
-  margin: 15px;
   &:hover {
     transform: scale(1.1); /* Scale the image up by 10% on hover */
     transition: transform 0.2s ease;
 }
+margin: 20px;
+border-radius: 5px;
 
 `
 
@@ -182,6 +183,13 @@ const SignupContainer = styled.div`
   border: 5px solid ${(props) => props.theme.color};
   border-radius: 8px;
 
+
+  background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 2px solid rgba(255, 255, 255, 0.99);
 `
 
 const ErrorMessage = styled.div`

@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 import { initFirebase } from "@/Config/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getDatabase, ref, onValue } from "firebase/database";
-
+import "@/style/card.css"
 const HostedWebsites = () => {
   const app = initFirebase();
   const auth = getAuth();
@@ -13,22 +13,22 @@ const HostedWebsites = () => {
   const [websites, setWebsites] = useState([]);
 
   useEffect(() => {
-      const rootRef = ref(database, "users");
-      onValue(rootRef, (snapshot) => {
-        const users = snapshot.val();
-        const updatedWebsites = [];
+    const rootRef = ref(database, "users");
+    onValue(rootRef, (snapshot) => {
+      const users = snapshot.val();
+      const updatedWebsites = [];
 
-        for (const userId in users) {
-          const userData = users[userId];
-          const { domain, cid } = userData?.uploads || {}; // Access domain and cid from user's uploads data
-          if (domain && cid) {
-            updatedWebsites.push({ userId, domain, cid });
-          }
+      for (const userId in users) {
+        const userData = users[userId];
+        const { domain, cid } = userData?.uploads || {}; // Access domain and cid from user's uploads data
+        if (domain && cid) {
+          updatedWebsites.push({ userId, domain, cid });
         }
+      }
 
-        setWebsites(updatedWebsites);
-      });
-    
+      setWebsites(updatedWebsites);
+    });
+
   }, [database]);
 
   return (
@@ -36,9 +36,31 @@ const HostedWebsites = () => {
       <Heading>Hosted Websites</Heading>
       <List>
         {websites.map((website, index) => (
+
           <ListItem key={index}>
-            <DomainName>{website.domain}</DomainName>
-            <Link target='blank' href={website.cid}>Visit Website</Link>
+
+            {/* <div class="container"> */}
+              <div class="card">
+                <div class="title">
+                  <h1>{website.domain}</h1>
+                </div>
+                <div class="content">
+                  <div class="social">
+                    <i class="fab fa-globe-europe"></i>
+                    <a href={website.cid} target="_blank">
+                      Visit Page</a>
+                  </div>
+
+
+
+                </div>
+                <div class="circle"></div>
+              </div>
+            {/* </div> */}
+
+
+            {/* <DomainName>{website.domain}</DomainName> */}
+            {/* <Link target='blank' href={website.cid}>Visit Website</Link> */}
           </ListItem>
         ))}
       </List>

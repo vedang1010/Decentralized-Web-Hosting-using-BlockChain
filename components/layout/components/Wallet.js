@@ -56,7 +56,7 @@ const Wallet = () => {
         <ConnectWalletWrapper onClick={connectWallet}>
             {/* : */}
             {balance=='' ? <Balance></Balance>:<Balance>{balance.slice(0,4)} SepoliaETH</Balance>}
-            {address=='' ? <Address>Connect to Wallet</Address>:<Address>{address.slice(0,6)}...{address.slice(39)}</Address>}
+            {address=='' ? <Address>Meta Wallet</Address>:<Address>{address.slice(0,6)}...{address.slice(39)}</Address>}
             {/* {address} {balance} */}
         </ConnectWalletWrapper>
     );
@@ -78,6 +78,7 @@ const ConnectWalletWrapper = styled.div`
     font-size: smaller;
     cursor: pointer;
     
+    
 `
 
 const Address=styled.h2`
@@ -88,6 +89,14 @@ const Address=styled.h2`
     justify-content: center;
     padding: 0 5px 0 5px;
     border: 10px;
+       cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 5px;
+ 
     
 `
 const Balance=styled.h2`

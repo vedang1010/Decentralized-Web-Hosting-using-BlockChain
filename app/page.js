@@ -4,26 +4,25 @@ import LoginPage from "@/components/LoginPage";
 import HostedWebsites from "@/components/hostedWebsites/page";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
-
 export default function Home() {
   const router = useRouter();
 
-  const handleLoginClick = () => {
-    router.push("/login");
-  };
+  // const handleLoginClick = () => {
+  //   router.push("/login");
+  // };
 
-  const handleRegisterClick = () => {
-    router.push("/register");
-  };
+  // const handleRegisterClick = () => {
+  //   router.push("/register");
+  // };
 
   return (
 
 
     <Layout>
-      <Navbar>
+      {/* <Navbar>
         <Button onClick={handleLoginClick}>Login</Button>
         <Button onClick={handleRegisterClick}>Register</Button>
-      </Navbar>
+      </Navbar> */}
       <HostedWebsites />
     </Layout>
   );

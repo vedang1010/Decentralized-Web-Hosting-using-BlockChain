@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 // import app from ""
 import { initFirebase } from "@/Config/firebaseApp";
-import {useAuthState} from "react-firebase-hooks/auth"
+import { useAuthState } from "react-firebase-hooks/auth"
 
 // To apply the default browser preference instead of explicitly setting it.
 // auth.useDeviceLanguage();
@@ -17,18 +17,18 @@ const LoginPage = () => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-  const [user,loading]=useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   // console.log(app);
-  if(loading){
+  if (loading) {
     return <div>Loading....</div>;
   }
-  if(user){
+  if (user) {
     router.push('/dashboard');
 
     return <div>Welcome {user.displayName}</div>;
   }
-  const signIn=async ()=>{
-    const result=await signInWithPopup(auth, provider);
+  const signIn = async () => {
+    const result = await signInWithPopup(auth, provider);
     console.log(result)
     // .then((result) => {
     //     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -48,8 +48,8 @@ const LoginPage = () => {
     //     const credential = GoogleAuthProvider.credentialFromError(error);
     //     // ...
     //   });
-      
-}
+
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ const LoginPage = () => {
         <StyledText>
           Login with Google
         </StyledText>
-        <StyledImage src="/google.png" alt="Google Logo" width={100} height={40} />
+        <StyledImage src="/google.png" alt="Google Logo" width={100} height={80} />
       </LoginSubContainer>
       <LoginSubDiv onSubmit={handleSubmit}> {/* Add onSubmit event handler to the form */}
         <LoginEmail placeholder="Email" type="email" required />
@@ -74,7 +74,7 @@ const LoginPage = () => {
           Forgot Password?
         </ForgetLink>
       </LoginSubDiv>
-      <SignupLink onClick={() => router.push('/signup')}> {/* Use router.push for navigation */}
+      <SignupLink onClick={() => router.push('/register')}> {/* Use router.push for navigation */}
         Don't Have an account?
       </SignupLink>
     </LoginContainer>
@@ -119,10 +119,12 @@ const LoginSubmit = styled.input`
   height: 40px;
   cursor: pointer;
   width: 100px;
-  background-color: green;
+  background-color: ${(props) => props.theme.bgColor};
+  color:  white;
   font-size: large;
   padding: 10px;
   font-weight: 500;
+  border-radius: 8px;
   color: black;
   &:hover {
     transform: scale(1.1); /* Scale the image up by 10% on hover */
@@ -174,7 +176,7 @@ const LoginContainer = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 5px solid ${(props) => props.theme.color};
+    /* border: 5px solid ${(props) => props.theme.color}; */
     border-radius: 8px;
     /* left: 80px; */
     display: flex;
@@ -182,15 +184,25 @@ const LoginContainer = styled.div`
     align-items: center;
     /* top: 550px; */
     flex-direction: column;
-    background-color: offwhite;
+    /* background-color: offwhite; */
+
+
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 2px solid rgba(255, 255, 255, 0.99);
 `
 const LoginSubContainer = styled.button`
     color: ${(props) => props.theme.color};
     cursor: pointer;
+    /* filter: grayscale(15px); */
+    background-color: aliceblue;
     font-size: large;
     font-weight: 800;
     /* margin: 20px; */
-    background-color:${(props) => props.theme.bgSubDiv};
+    /* background-color:${(props) => props.theme.bgSubDiv}; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -199,6 +211,8 @@ const LoginSubContainer = styled.button`
     &:hover {
       transform: scale(1.1); /* Scale the image up by 10% on hover */
       transition: transform 0.2s ease;
+      background-color:${(props)=>props.theme.bgColor};
+
   }
 `
 
@@ -213,9 +227,9 @@ const StyledImage = styled(Image)`
   border-radius: 5px;
   height: 70px;
   width: 50px;
-  scale: 0.3;
+  scale: 0.6;
   /* margin-left: 50px; */ 
 `
 const StyledText = styled.div`
-
+  color:${(props)=>props.theme.bgDiv};
 `

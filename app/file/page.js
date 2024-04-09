@@ -9,6 +9,7 @@ import { getAuth } from "firebase/auth"
 import { initFirebase } from "@/Config/firebaseApp"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { getDatabase, ref, set, onValue } from "firebase/database";
+import {toast} from "react-toastify"
 import { useRouter } from 'next/navigation';
 
 // const applicationService = new ApplicationAccessTokenService({ clientId: 'client_x5nxBa5Iv6wXy6wK75UB' });
@@ -192,12 +193,12 @@ const Files = () => {
                         });
 
                     }
-
                 });
-
+                toast.success("Files Uploaded Successfully")
             } catch (error) {
                 console.error('Error creating folder and uploading:', error);
                 setUploadLoading(false);
+                toast.warn("Files Not Uploaded")
             }
         }
     };
@@ -236,6 +237,8 @@ const Files = () => {
 
                 // Update loading state
                 setUploadLoading(false);
+                toast.success("Files Uploaded Successfully")
+
                 // setUploaded(true);
             } catch (error) {
                 console.error('Error uploading files:', error);
@@ -329,7 +332,7 @@ const Files = () => {
         <Layout>
             <Dashboardbtn>
                 <div>
-               <Button onClick={GoToDashboard}>Dashboard</Button>
+               <Button onClick={GoToDashboard}> Go to Dashboard</Button>
                </div>
                </Dashboardbtn>
         <DomainInputContainer>
