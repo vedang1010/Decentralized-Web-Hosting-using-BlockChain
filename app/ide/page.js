@@ -47,7 +47,7 @@ export default function Ide() {
       setCssCode(files["style.css"].value);
       setJsCode(files["script.js"].value);
       document.getElementById("outputWindow").style.display = "block";
-      document.getElementById("outputWindow").style.width = "100vw";
+      // document.getElementById("outputWindow").style.width = "100vw";
 
     });
 

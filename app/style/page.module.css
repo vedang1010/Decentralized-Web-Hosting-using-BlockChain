@@ -285,18 +285,23 @@
 }
 
 .outputiframewindow {
-  width: 50vw;
+  width: 98vw;
   height: 45vh;
   background-color: white;
 }
 
 .websiteWindow{
-  position: absolute;
+  position: fixed;
   z-index: 1;
-  top: 30vh;
-  left: 25vw;
+  /* top: 30vh; */
+  width: 98vw;
+  left: 0;
+  bottom: 0;
+  
 }
-
+.websiteWindow iframe{
+  width:98vw;
+}
 .buttonBlock {
   background-color: #F0F4F4;
   box-shadow: 0 4px 10px 0 rgba(0,0,0,.2);
