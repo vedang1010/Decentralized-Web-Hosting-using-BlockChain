@@ -330,14 +330,13 @@ const Files = () => {
     };
     return (
         <Layout>
-            <Dashboardbtn>
+            {/* <Dashboardbtn>
                 <div>
                <Button onClick={GoToDashboard}> Go to Dashboard</Button>
                </div>
-               </Dashboardbtn>
+               </Dashboardbtn> */}
         <DomainInputContainer>
-        Enter Domain
-            <DomainInputField placeholder='Domain' onChange={handleDomainNameChange}></DomainInputField>
+            <DomainInputField placeholder='Enter Domain / Title' onChange={handleDomainNameChange}></DomainInputField>
         </DomainInputContainer>
             <Input>
                 <div>
@@ -411,6 +410,10 @@ const Files = () => {
 
 const DomainInputContainer = styled.div`
     margin-bottom: 20px;
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Dashboardbtn = styled.div`
@@ -427,7 +430,9 @@ const Dashboardbtn = styled.div`
 const DomainInputField = styled.input`
     width: 50%;
     margin: 10px 10px;
-
+    background-color: aliceblue;
+    border: 2px solid blue;
+    color: black;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -586,7 +591,7 @@ const Button = styled.button`
   border-radius: 25px;
   border: 5px solid ${(props) => props.theme.color};
   color: ${(props) => props.theme.color};
-  background-color: ${(props) => props.theme.bgSubDiv};
+  background-color: ${(props) => props.theme.bgDiv};
   border: none;
   margin-top: 30px;
   cursor: pointer;
