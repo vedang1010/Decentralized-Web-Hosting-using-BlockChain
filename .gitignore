@@ -50,3 +50,4 @@ node_modules
 /coverage
 /coverage.json
 
+/Config/firebaseApp.js
