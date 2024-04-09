@@ -6,14 +6,15 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDh-XMeKlU0VNZwauz5rfnymjmU6OlWLgE",
-  authDomain: "decentralized-web.firebaseapp.com",
-  projectId: "decentralized-web",
-  storageBucket: "decentralized-web.appspot.com",
-  messagingSenderId: "141940405499",
-  appId: "1:141940405499:web:d2d6e9e0e3c85cb9342c5e",
-  databaseURL: "https://decentralized-web-default-rtdb.firebaseio.com/",
+  apiKey: process.env.NEXT_APP_FIREBASE_API_KEY+"",
+  authDomain: process.env.NEXT_APP_FIREBASE_AUTH_DOMAIN+"",
+  projectId: process.env.NEXT_APP_FIREBASE_PROJECT_ID+"",
+  storageBucket: process.env.NEXT_APP_FIREBASE_STORAGE_BUCKET+"",
+  messagingSenderId: process.env.NEXT_APP_FIREBASE_MESSAGING_SENDER_ID+"",
+  appId: process.env.NEXT_APP_FIREBASE_APP_ID+"",
+  databaseURL:"https://decentralized-web-default-rtdb.firebaseio.com/",
 };
+
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
