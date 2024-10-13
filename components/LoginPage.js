@@ -55,7 +55,7 @@ const LoginPage = () => {
     e.preventDefault();
     // Perform login logic
     // After successful login, navigate to the dashboard page
-    router.push('/dashboard');
+    router.push('/Dashboard');
   }
   return (
     <LoginContainer>
@@ -75,7 +75,7 @@ const LoginPage = () => {
         </ForgetLink>
       </LoginSubDiv>
       <SignupLink onClick={() => router.push('/register')}> {/* Use router.push for navigation */}
-        Don't Have an account?
+        Dont Have an account?
       </SignupLink>
     </LoginContainer>
   )

@@ -93,7 +93,7 @@ const Files = () => {
         if (user) {
             fetchFileCIDs();
         }
-    }, [user]);
+    }, [user,database]);
 
     const handleDomainNameChange = (event) => {
         setDomainName(event.target.value);

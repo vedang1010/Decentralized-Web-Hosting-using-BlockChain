@@ -10,7 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { Toast } from "react-toastify";
 
-const Dashboard = () => {  // Renamed dashboard to Dashboard
+function Dashboard  () {  // Renamed dashboard to Dashboard
   const app = initFirebase();
   const database = getDatabase(app);
   const router = useRouter(); // Initialize useRouter hook
