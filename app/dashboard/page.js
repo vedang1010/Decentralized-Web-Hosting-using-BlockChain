@@ -8,9 +8,9 @@ import { getAuth } from "firebase/auth";
 import { initFirebase } from "@/Config/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getDatabase, ref, onValue } from "firebase/database";
-import { Toast } from "react-toastify"
+import { Toast } from "react-toastify";
 
-function Dashboard() {
+const Dashboard = () => {  // Renamed dashboard to Dashboard
   const app = initFirebase();
   const database = getDatabase(app);
   const router = useRouter(); // Initialize useRouter hook
@@ -34,26 +34,25 @@ function Dashboard() {
     });
   }, [database]);
 
-  var loggedInUserWebsite = "";
-  var loggedInUserDomain = "";
-  var loggedInUserCID = "";
-
+  let loggedInUserWebsite = "";
+  let loggedInUserDomain = "";
+  let loggedInUserCID = "";
+  
   if (user) {
     loggedInUserWebsite = websites.find(website => website.userId === user.uid);
-    loggedInUserDomain = loggedInUserWebsite ? loggedInUserWebsite.domain : ''; // Domain of the logged-in user
-    loggedInUserCID = loggedInUserWebsite ? loggedInUserWebsite.cid : ''; // CID of the logged-in user
+    loggedInUserDomain = loggedInUserWebsite ? loggedInUserWebsite.domain : ''; 
+    loggedInUserCID = loggedInUserWebsite ? loggedInUserWebsite.cid : ''; 
   }
 
   const handleSignOut = () => {
     console.log("Additional action before sign out");
-    router.push("/login")
+    router.push("/login");
     auth.signOut();
   };
 
   if (loading) {
     return <div>Loading....</div>;
   }
-  
   if (!user) {
     router.push('/login');
     return <div>Please sign in to continue</div>;
@@ -66,8 +65,8 @@ function Dashboard() {
   return (
     <Layout>
       <DashboardTopLeft>
-        <Header>{loggedInUserDomain}</Header> {/* Display the domain of the logged-in user */}
-        <CID target='blank' href={loggedInUserCID}>Visit Website</CID> {/* Display the CID of the logged-in user */}
+        <Header>{loggedInUserDomain}</Header>
+        <CID target='blank' href={loggedInUserCID}>Visit Website</CID>
         <Subheader>Created on 08/04/2024</Subheader>
         <SignOutContainer onClick={handleSignOut}>
           Sign out
@@ -95,26 +94,25 @@ function Dashboard() {
   )
 }
 
-export default Dashboard;
+export default Dashboard; // Don't forget to export the renamed component
 
 const CID = styled.a`
-  color: blue;
-  text-decoration: none;
-  margin-left: 10px;
-
-  &:hover {
-    text-decoration: underline;
-  }
+color: blue;
+text-decoration: none;
+margin-left: 10px;
+&:hover {
+  text-decoration: underline;
+}
 `;
 
 const ImageContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 50px;
-  width: 100%;
-  height: 250px;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 50px;
+    width: 100%;
+    height: 250px;
+    align-items: flex-start;
 `;
 
 const StyledImage = styled.img`
@@ -123,10 +121,10 @@ const StyledImage = styled.img`
   width: auto;
   margin: 0;
   &:first-child {
-    margin-right: 0px;
+    margin-right: 0px; 
   }
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.2); 
     transition: transform 0.2s ease;
   }
 `;
@@ -141,7 +139,7 @@ const Logs = styled.div`
 `;
 
 const Content = styled.div`
-  font-size: 16px;
+    font-size: 16px;
 `;
 
 const DashboardTopLeft = styled.div`
@@ -182,6 +180,7 @@ const FileManager = styled.button`
   background-color: #f2f2f2;
   padding: 10px;
   border-radius: 5px;
+  display: flex;
   cursor: pointer;
   justify-content: center;
   align-items: center;
@@ -226,5 +225,5 @@ const SignOutContainer = styled.button`
   text-transform: uppercase;
   padding: 10px 20px;
   border-radius: 5px;
-  background-color: ${(props) => props.theme.bgDiv};
+  background-color: ${(props)=>props.theme.bgDiv};
 `;
