@@ -55,7 +55,7 @@ const LoginPage = () => {
     e.preventDefault();
     // Perform login logic
     // After successful login, navigate to the dashboard page
-    router.push('/Dashboard');
+    router.push('/dashboard');
   }
   return (
     <LoginContainer>
